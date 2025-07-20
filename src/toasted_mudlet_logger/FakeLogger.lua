@@ -1,3 +1,8 @@
+--- Fake implementation for Logger for tests in non-Mudlet environments.
+-- This mimics the API of the real Logger but does nothing.
+-- Useful for testing when Mudlet-specific functions are unavailable.
+-- @classmod FakeLogger
+
 local FakeLogger = {}
 FakeLogger.__index = FakeLogger
 

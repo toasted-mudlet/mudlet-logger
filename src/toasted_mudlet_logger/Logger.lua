@@ -1,3 +1,7 @@
+--- Logger class for leveled logging in Mudlet.
+-- Provides debug, info, warning, and error level logging with optional tagging.
+-- @classmod Logger
+
 local inspect = require "inspect"
 
 local LogLevel = {
@@ -62,13 +66,10 @@ local function log(self, level, first, ...)
     end
 end
 
---- Logger class for leveled logging in Mudlet.
--- @type Logger
 local Logger = {}
 Logger.__index = Logger
 
 --- Set the global log level.
--- @function Logger.setGlobalLogLevel
 -- @tparam string level One of "DEBUG", "INFO", "WARN", "ERROR"
 function Logger.setGlobalLogLevel(level)
     if LogLevel[level] then
@@ -79,8 +80,7 @@ function Logger.setGlobalLogLevel(level)
 end
 
 --- Get the current global log level as a string.
--- @function Logger.getGlobalLogLevel
--- @treturn string The current log level name
+-- @treturn string The current log level name.
 function Logger.getGlobalLogLevel()
     for k, v in pairs(LogLevel) do
         if v.level == globalLogLevel then
@@ -90,23 +90,20 @@ function Logger.getGlobalLogLevel()
 end
 
 --- Set whether to also log to the main console.
--- @function Logger.setLogToMain
--- @tparam boolean value True to log to main console, false otherwise
+-- @tparam boolean value True to log to main console, false otherwise.
 function Logger.setLogToMain(value)
     logToMain = value
 end
 
 --- Get whether logging to the main console is enabled.
--- @function Logger.getLogToMain
--- @treturn boolean True if logging to main console is enabled
+-- @treturn boolean True if logging to main console is enabled.
 function Logger.getLogToMain()
     return logToMain
 end
 
---- Constructs a new Logger instance.
--- @function Logger.new
--- @tparam[opt] string tag Optional tag for the logger (e.g. "MyModule")
--- @treturn Logger A new Logger instance
+--- Construct a new Logger instance.
+-- @tparam[opt] string tag Optional tag for the logger (e.g. "MyModule").
+-- @treturn Logger A new Logger instance.
 function Logger:new(tag)
     -- If no tag is provided, try to infer one from the file path
     if not tag then
@@ -120,38 +117,33 @@ function Logger:new(tag)
     local instance = setmetatable({
         tag = tag
     }, self)
-
     return instance
 end
 
 --- Log a debug-level message.
--- @function Logger:debug
--- @param first The first message or value to log
--- @param ... Additional values to log
+-- @param first The first message or value to log.
+-- @param ... Additional values to log.
 function Logger:debug(first, ...)
     log(self, LogLevel.DEBUG, first, ...)
 end
 
 --- Log an info-level message.
--- @function Logger:info
--- @param first The first message or value to log
--- @param ... Additional values to log
+-- @param first The first message or value to log.
+-- @param ... Additional values to log.
 function Logger:info(first, ...)
     log(self, LogLevel.INFO, first, ...)
 end
 
 --- Log a warning-level message.
--- @function Logger:warn
--- @param first The first message or value to log
--- @param ... Additional values to log
+-- @param first The first message or value to log.
+-- @param ... Additional values to log.
 function Logger:warn(first, ...)
     log(self, LogLevel.WARN, first, ...)
 end
 
 --- Log an error-level message.
--- @function Logger:error
--- @param first The first message or value to log
--- @param ... Additional values to log
+-- @param first The first message or value to log.
+-- @param ... Additional values to log.
 function Logger:error(first, ...)
     log(self, LogLevel.ERROR, first, ...)
 end
